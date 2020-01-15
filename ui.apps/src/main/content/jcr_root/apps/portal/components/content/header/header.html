@@ -1,0 +1,129 @@
+<div class="cq-placeholder" data-sly-test.author="${wcmmode.edit || wcmmode.design}" data-emptytext="Header"></div>
+<sly data-sly-use.header="com.website.payback.core.models.HeaderModel" data-sly-use.template="/apps/payback/components/content/commons/templates.html">
+    <sly data-sly-test.loggedIn="${header.isLoggedIn}">
+    </sly>
+    <sly data-sly-test="${properties.requiredDOB}">
+        <input type="hidden" id="pb-check-dob" class="pb-check-dob" value="true">
+    </sly>
+    <sly data-sly-test="${!properties.requiredDOB}">
+        <input type="hidden" id="pb-check-dob" class="pb-check-dob" value="false">
+    </sly>
+    <div class="pb-header-top">
+        <nav class="navbar navbar-fixed-top m-0 b-0 pb-fixed-navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <sly data-sly-include="headerlogo.html"></sly>
+
+            <div class="collapse navbar-collapse pb-nav-wrapper" id="myNavbar">
+                <ul class="nav navbar-nav pb-payback-plus-btn">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${header.joinPaybackPlusLink.linkUrl}">${header.joinPaybackPlusLink.linkText}</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav pb-main-menu">
+                    <sly data-sly-list.nav="${header.headerNavigation}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" class="pb-title-menu">${nav.navigationTab.navTitle}
+								<span class="nav-link dropdown-toggle glyphicon glyphicon-plus" data-toggle="dropdown"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <sly data-sly-list.subNav="${nav.subNavList}">
+                                    <li class="nav-item dropdown dropdown-submenu">
+                                        <a class="${subNav.redirectionURLSoftLoginClass} pb-gatrack" data-gaevent="navigation_menu_click_All_pages_2" data-clicktext="${subNav.navTitle}" href="${subNav.linkUrl}" target="${subNav.isExternal?'_blank':''}">${subNav.navTitle}
+											<sly data-sly-test="${subNav.subChildLinkList}">
+                                            	<span class="nav-link dropdown-toggle glyphicon glyphicon-plus" data-toggle=""></span>
+                                            </sly>
+                                        </a>
+ 								<sly data-sly-test="${subNav.subChildLinkList}">
+                                        <ul class="dropdown-menu">
+                                            <sly data-sly-list.subChildNav="${subNav.subChildLinkList}">
+                                                <li>
+                                                    <a href="${subChildNav.linkUrl}" class="pb-gatrack" data-gaevent="navigation_menu_click_All_pages_2" data-clicktext="${subChildNav.navTitle}">${subChildNav.navTitle}
+                                                    </a>
+                                                </li>
+                                            </sly>
+                                        </ul>
+                                        </sly>
+                                    </li>
+                                </sly>
+                            </ul>
+                        </li>
+                    </sly>
+                </ul>
+                <ul class="nav navbar-nav pb-support-menu">
+                    <li class="nav-item">
+                        <a class="nav-link pb-download-link" href="${header.downloadAppLink.linkUrl}">${header.downloadAppLink.linkText}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link pb-customer-link" href="${header.customerCareLink.linkUrl}">${header.customerCareLink.linkText}</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav pb-social-media-menu">
+                    <sly data-sly-list.socialList="${header.socialIcons}">
+                        <li class="nav-item">
+                            <a class="nav-link pb-gatrack" data-gaevent="header_social_icon_click_All_pages_9" data-clicktext="${socialList.linkAltText}" href="${socialList.linkUrl}" target="_blank">
+                                <img src="${socialList.linkImage}" alt="${socialList.linkAltText}">
+                                <img src="${socialList.mobileLinkImage}" alt="${socialList.linkAltText}" class="pb-img-social-resp">
+                            </a>
+                        </li>
+                    </sly>
+                </ul>
+            </div>
+        </nav>
+        <!-- Main nav ends here (menu, support menu, social media links) -->
+    </div>
+    <!-- Header top ends here -->
+    <div class="pb-header-bottom">
+        <div class="pb-header-bottom-content">
+            <sly data-sly-resource="${'search' @ resourceType='payback/components/content/search'}">
+            </sly>
+            <div class="pb-cart-notification-menu-wrapper">
+                <nav class="navbar m-0 b-0">
+                    <div class="collapse navbar-collapse in pb-user-menu-wrapper" id="myUserbar">
+                        <sly data-sly-test="${!header.getHideNotificationBell}">
+                            <ul class="nav navbar-nav pb-cart-notification-menu">
+                                <!--<sly data-sly-include="cart.html"></sly>-->
+                                <sly data-sly-include="notifications.html"></sly>
+                            </ul>
+                        </sly>
+                        <sly data-sly-include="header-login.html"></sly>
+                    </div>
+                    <!-- Header bottom menu ends here -->
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Header bottom -->
+<script type='text/javascript'>
+    	var vendorCode = '${properties.rewardsVendorCode @context='scriptString'}';
+        var esbBaseURL = '${properties.esbBaseURL @context='scriptString'}';
+        var rewardsDomainURL = '${properties.rewardsDomainURL @context='scriptString'}';
+		var pageType = '${pageProperties.cq:tags @context='scriptString'}';
+        var loginType = '${pageProperties.pageLoginType @context='scriptString'}';
+        var ssoLinks =[];
+        var domainLinks ={};
+</script>
+</sly>
+<sly data-sly-list.nav="${header.ssoListDetails}">
+    <script type='text/javascript'>
+            ssoLinks.push('${nav.linkText @context='scriptString'}');
+			localStorage.setItem("ssoLinks", ssoLinks);
+	</script>
+ </sly>
+
+<sly data-sly-list.domainName="${header.domainNamesList}">
+    <script type='text/javascript'>
+          domainLinks['${domainName.linkText @context='scriptString'}'] = ('${domainName.linkUrl @context='scriptString'}');
+	</script>
+</sly>
+
+<!--DFP start-->
+
+<script type='text/javascript'>
+    var dfpScripts = '${properties.dfpScripts @context='scriptString'}';
+</script>
+<!--DFP ens-->

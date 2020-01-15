@@ -1,0 +1,23 @@
+<sly data-sly-use.header="com.website.payback.core.models.HeaderModel"></sly>
+<sly data-sly-test.notificationSize="${header.getUserProfile.getNotificationListSize}"></sly>
+<sly data-sly-test="${header.getUserProfile.isNotificationAvailable}">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle pb-notification-link" href="#" data-toggle="dropdown">&nbsp;<span>${notificationSize}</span></a>
+        <ul class="dropdown-menu">
+            <sly data-sly-list="${header.getUserSubNotificationsList}">
+                <li><a href="/content/payback/home/profile.html?notifications" class="authReq">${item.title}<span>${item.description}</span></a></li>
+            </sly>
+            <div data-sly-test="${notificationSize > 3}">
+                <li class="pb-view-all-notification">
+                    <a class="authReq" href="/content/payback/home/profile.html?notifications">VIEW ALL</a>
+                </li>
+            </div>
+        </ul>
+    </li>
+</sly>
+
+<sly data-sly-test="${!header.getUserProfile.isNotificationAvailable}">
+    <li>
+        <a class="nav-link pb-notification-link" href="#" data-toggle="dropdown">&nbsp;</a>
+    </li>
+</sly>

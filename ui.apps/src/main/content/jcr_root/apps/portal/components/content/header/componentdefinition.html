@@ -1,0 +1,17 @@
+<section data-sly-include="headerlogo.html"></section>
+
+<div data-sly-use.header="com.website.payback.core.models.Header"
+	data-sly-use.template="/apps/payback/components/content/commons/templates.html">
+	<div data-sly-list.nav="${header.headerNavigation}" data-sly-unwrap>
+    		<li><a href="${nav.navigationTab.path}"> ${nav.navigationTab.title @ context = 'html'} </a>
+			<div data-sly-list.subNav="${nav.subNavList}" data-sly-unwrap>
+				<ul>
+					<a href="${subNav.linkUrl}"> ${subNav.jcrTitle} </a>
+				</ul>
+			</div>
+		</li>
+	</div>
+</div>
+
+<div data-sly-test.author="${wcmmode.edit || wcmmode.design}"> </div>
+<sly data-sly-call="${template.placeholder @ author}"></sly>

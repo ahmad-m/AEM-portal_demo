@@ -1,0 +1,9 @@
+.coral-RadioGroup--horizontal {
+    display: inline-flex;
+    color: #3067a5;
+}
+.coral-RadioGroup--vertical {
+    display: block;
+    color: #000000;
+}
+

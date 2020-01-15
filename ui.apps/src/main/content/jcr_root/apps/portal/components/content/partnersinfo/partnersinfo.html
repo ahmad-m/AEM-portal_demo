@@ -1,0 +1,22 @@
+<div class="cq-placeholder" data-sly-test.author="${wcmmode.edit || wcmmode.design}" data-emptytext="Partner's Info Component"></div>
+
+<sly data-sly-use.partnerObj="com.aem.wetrain.core.models.PartnersInfoModel">
+
+	<ul><sly data-sly-test.salutation=${partnerObj.getPartnersInfo.getpGender}>
+    <sly data-sly-test="${salutation=='Male'}">
+   	 <b>Name: Mr. ${partnerObj.getPartnersInfo.pfName} ${partnerObj.getPartnersInfo.plName}</b>
+    </sly>
+    <sly data-sly-test="${salutation=='Female'}">
+   	 <b>Name: Mrs. ${partnerObj.getPartnersInfo.pfName} ${partnerObj.getPartnersInfo.plName}</b>
+    </sly>
+	<sly data-sly-test="${salutation=='Other'}">
+   	 <b>Name: ${partnerObj.getPartnersInfo.pfName} ${partnerObj.getPartnersInfo.plName}</b>
+    </sly></br>
+    <b>Sex: </b><span>${partnerObj.getPartnersInfo.getpGender}</span></br>
+    <b>Current Address:</b>
+    <ul><li><span>${partnerObj.getPartnersInfo.getpCurrentAddress}</span></li></ul>
+
+	<b>Permanent Address:</b>
+    <ul><li><span>${partnerObj.getPartnersInfo.getpPmntAddress}</span></li></ul></ul>
+
+</sly>

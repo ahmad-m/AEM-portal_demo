@@ -1,0 +1,122 @@
+<sly data-sly-use.header="com.website.payback.core.models.HeaderModel" data-sly-use.template="/apps/payback/components/content/commons/templates.html">
+    <sly data-sly-test.loggedIn="${header.isLoggedIn}">
+    </sly>
+
+    <sly data-sly-test="${!loggedIn}">
+        <ul class="nav navbar-nav pb-user-menu pb-user-logout">
+            <sly data-sly-list.logList="${header.userDetails}">
+                <sly data-sly-test="${logList.linkText !='Register'}">
+                	<li class="${logList.linkClass}"><a class="nav-link pb-gatrack" data-gaevent="login_click_All_pages_4" data-clicktext="${logList.linkText}" href="${logList.linkUrl}">${logList.linkText}</a></li>
+            	</sly>
+                <sly data-sly-test="${logList.linkText =='Register'}">
+                	<li class="${logList.linkClass}"><a class="nav-link pb-gatrack" data-gaevent="register_click_All_pages_8" data-clicktext="${logList.linkText}" href="${logList.linkUrl}">${logList.linkText}</a></li>
+            	</sly>
+            </sly>
+        </ul>
+    </sly>
+    <sly data-sly-test="${loggedIn}">
+        <sly data-sly-test.loginType="${header.loginType}"></sly>
+        <sly data-sly-test="${loginType=='strongLogin'}">
+		 <ul class="nav navbar-nav pb-user-menu">
+                <li class="nav-item dropdown">
+                   <!--  <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+            		HI, ${header.userProfile.firstName} ${header.userProfile.lastName}<span class="caret"></span> -->
+
+            		<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                		<span class="pb-user-name">HI, ${header.userProfile.firstName} ${header.userProfile.lastName}</span>
+          				<span class="caret"></span>
+          				<span class="pb-header-points">${header.userProfile.availablePointBalance} <sup>o</sup>P</span>
+        			</a>
+
+                    <ul class="dropdown-menu multi-column columns-2">
+                        <div class="row pb-upgrade-top-plus hard-login">
+                            <div class="col-sm-12">
+                                <ul class="multi-column-dropdown">
+                                    <li>
+                                        <a href="${header.getJoinPaybackPlusLink.getLinkUrl}" class="pb-upgrade-payback-plus">
+	                                	${header.getJoinPaybackPlusLink.getLinkText} 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <sly data-sly-list.logList="${header.userDetails}">
+                                 <div class="col-sm-6">
+									<ul class="multi-column-dropdown">
+                                        <sly data-sly-test="${logList.linkClass =='logout'}">
+                                            <li><a href="javascript:void(0)" class="pb-${logList.linkClass}">${logList.linkText}</a></li>
+                                         </sly>
+                                         <sly data-sly-test="${logList.linkClass =='store-locator'}">
+                                                <li><a href="/content/payback/home/store-locator.html" class="pb-${logList.linkClass}">${logList.linkText}</a></li> 
+                                         </sly>
+                                         <sly data-sly-test="${logList.linkClass !='store-locator' && logList.linkClass != 'logout'}">
+                                              <li><a href="/content/payback/home/profile.html?${logList.linkClass}" class="pb-${logList.linkClass}">${logList.linkText}</a></li>
+                                         </sly>
+                                      </ul>
+                                </div>
+                            </sly>
+                        </div>
+                    </ul>
+                </li>
+            </ul>            
+        </sly>
+        <sly data-sly-test="${loginType=='weakLogin'}">
+            <ul class="nav navbar-nav pb-user-menu pb-weak-login-menu">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+            		Welcome<span class="caret"></span>
+				</a>
+                    <ul class="dropdown-menu multi-column columns-2">
+                        <div class="row pb-upgrade-top-plus hard-login">
+                            <div class="col-sm-12">
+                                <ul class="multi-column-dropdown">
+                                    <li>
+                                   <a href="${header.getJoinPaybackPlusLink.getLinkUrl}" class="pb-upgrade-payback-plus authReq">
+	                                	${header.getJoinPaybackPlusLink.getLinkText} 
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                           <sly data-sly-list.logList="${header.userDetails}">
+                             <sly data-sly-test.currentPagePath="${currentPage.getPath}"></sly>
+                           <sly data-sly-test.strongLoginValue="${logList.strongLogin}"></sly>
+                                <div class="col-sm-6">
+                                    <ul class="multi-column-dropdown">
+                                    <sly data-sly-test="${strongLoginValue}">
+                                     	<sly data-sly-test="${currentPagePath != '/content/payback/home/profile'}">
+                                            <sly data-sly-test.storelocator="${logList.linkClass}"></sly>
+                                            <sly data-sly-test="${logList.linkClass =='store-locator'}">
+                                                <li><a href="/content/payback/home/store-locator.html" class="pb-${logList.linkClass}">${logList.linkText}</a></li> 
+                                            </sly>
+                                            <sly data-sly-test="${logList.linkClass =='logout'}">
+                                                <li><a href="javascript:void(0)" class="pb-${logList.linkClass} pb-gatrack" data-gaevent="login_click_All_pages_4" data-clicktext="${logList.linkText}">${logList.linkText}</a></li> 
+                                            </sly>
+                                            <sly data-sly-test="${logList.linkClass !='store-locator' && logList.linkClass !='logout'}">
+                                                <li><a href="#tab=${logList.linkClass}" class="pb-${logList.linkClass} hard-login pb-gatrack" data-gaevent="login_click_All_pages_4" data-clicktext="${logList.linkText}">${logList.linkText}</a></li>
+                                            </sly>
+                                        </sly>
+                                      </sly>
+                                        <sly data-sly-test="${!strongLoginValue}">
+                                            <sly data-sly-test="${logList.linkClass =='store-locator'}">
+                                            	<li><a href="/content/payback/home/store-locator.html" class="pb-${logList.linkClass} pb-gatrack" data-gaevent="login_click_All_pages_4" data-clicktext="${logList.linkText}">${logList.linkText}</a></li> 
+                                            </sly>
+                                             <sly data-sly-test="${logList.linkClass =='logout'}">
+                                                <li><a href="javascript:void(0)" class="pb-${logList.linkClass} pb-gatrack" data-gaevent="login_click_All_pages_4" data-clicktext="${logList.linkText}" >${logList.linkText}</a></li> 
+                                            </sly>
+                                            <sly data-sly-test="${logList.linkClass !='store-locator' && logList.linkClass !='logout'}">
+                                                <li><a href="#tab=${logList.linkClass}" class="pb-${logList.linkClass} hard-login pb-gatrack" data-gaevent="login_click_All_pages_4" data-clicktext="${logList.linkText}">${logList.linkText}</a></li>
+                                            </sly>
+                                        </sly>
+                                    </ul>
+                                </div>
+                            </sly>
+                        </div>
+                    </ul>
+                </li>
+            </ul>
+        </sly>
+    </sly>
+</sly>
